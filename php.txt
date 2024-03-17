@@ -1,0 +1,471 @@
+
+user.php
+
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id']) || $_SESSION['type'] != 'User') {
+    header("Location: /kantor/log.php");
+    exit();
+}
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "kantor";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$user_id = $_SESSION['user_id'];
+
+$sql = "SELECT portfel FROM users WHERE user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    echo $_SESSION['imie']," ", $_SESSION['nazwisko'],"</br>";
+    echo "Stan Twojego portfela: " . $row['portfel'] . " PLN";
+    echo "</br><a href='user_panel.php'>Zmien</a></br>";
+    echo "<a href='user_portfel.php'>Dodaj</a></br>";
+    echo "<a href='/kantor/log.php'>Wyloguj</a>";
+} else {
+    echo "Nie znaleziono danych portfela.";
+}
+
+$stmt->close();
+$conn->close();
+?>
+
+
+
+
+
+user_panel.php
+
+
+<?php
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['type'] != 'User') {
+    header("Location: /kantor/log.php");
+    exit();
+}
+echo "<h1>ID " . $_SESSION['user_id'] . "</h1>";
+$conn = new mysqli('localhost', 'root', '', 'kantor');
+if ($conn->connect_error) {
+    die("Blad Polaczenia: " . $conn->connect_error);
+}
+
+if ($_POST) {
+    $name = $_POST['imie'];
+    $surname = $_POST['nazwisko'];
+    $haslo = $_POST['haslo'];
+    $login = $_POST['e_mail'];
+    $_SESSION['imie'] = $name;
+    $_SESSION['nazwisko'] = $surname;
+
+    $sql = "UPDATE users SET imie='$name', nazwisko='$surname', login='$login', haslo='$haslo' WHERE user_id=" . $_SESSION['user_id'];
+
+
+    $conn->query($sql);
+    header("location: user.php");
+}
+
+$sql = "SELECT * FROM users WHERE user_id=" . $_SESSION['user_id'];
+$result = $conn->query($sql);
+
+
+echo "<form method='POST' enctype='multipart/form-data'>";
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    echo "<table>";
+    echo "<tr><td>Imie</td><td><input type='text' name='imie' value='" . $row['imie'] . "'></td></tr>";
+    echo "<tr><td>Nazwisko</td><td><input type='text' name='nazwisko' value='" . $row['nazwisko'] . "'></td></tr>";
+    echo "<tr><td>Login</td><td><input type='text' name='e_mail' value='" . $row['login'] . "'></td></tr>";
+    echo "<tr><td>Haslo</td><td><input type='password' name='haslo' value='" . $row['haslo'] . "'></td></tr>";
+    echo "<tr><td><button type='submit'>Zapisz</button></td></tr>";
+    echo "</table>";
+} else {
+    echo "Nie ma nic";
+}
+echo "</form>";
+
+$conn->close();
+?>
+
+
+
+user_portfel.php
+
+<?php
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['type'] != 'User') {
+    header("Location: /kantor/log.php");
+    exit();
+}
+echo "<h1>ID " . $_SESSION['user_id'] . "</h1>";
+$conn = new mysqli('localhost', 'root', '', 'kantor');
+if ($conn->connect_error) {
+    die("Blad Polaczenia: " . $conn->connect_error);
+}
+
+if ($_POST) {
+    $portfel = (float)$_POST['portfel'];
+
+    $sql = "UPDATE users SET portfel=$portfel WHERE user_id=" . $_SESSION['user_id'];
+
+
+    $conn->query($sql);
+    header("location: user.php");
+}
+
+$sql = "SELECT * FROM users WHERE user_id=" . $_SESSION['user_id'];
+$result = $conn->query($sql);
+
+
+echo "<form method='POST' enctype='multipart/form-data'>";
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    echo "<table>";
+    echo "<tr><td>Portfel</td><td><input type= 'number' step='0.01' name='portfel' value='" . $row['portfel'] . "'></td></tr>";
+    echo "<tr><td><button type='submit'>Zapisz</button></td></tr>";
+    echo "</table>";
+} else {
+    echo "Nie ma nic";
+}
+echo "</form>";
+
+$conn->close();
+?>
+
+
+user_admin.php
+
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id']) || $_SESSION['type'] != 'Admin') {
+    header("Location: /kantor/log.php");
+    exit();
+}
+$user_id = $_SESSION['user_id'];
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "kantor";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$user_id = $_SESSION['user_id'];
+
+$sql = "SELECT portfel FROM users WHERE user_id = $user_id";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    echo $_SESSION['imie']," ", $_SESSION['nazwisko'],"</br>";
+    echo "Stan Twojego portfela: " . $row['portfel'] . " PLN</br>";
+    echo "<a href='user_admin_panel.php'>Admin panel</a></br>";
+    echo "<a href='user_admin_edit.php'>Zmien dane</a></br>";
+    echo "<a href='user_admin_portfel.php'>Dodaj kase</a></br>";
+    echo "<a href='log.php'>Wyloguj</a>";
+} else {
+    echo "Nie znaleziono danych portfela.";
+}
+
+$conn->close();
+?>
+
+
+user_admin_edit.php
+
+<?php
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['type'] != 'Admin') {
+    header("Location: /kantor/log.php");
+    exit();
+}
+echo "<h1>ID " . $_SESSION['user_id'] . "</h1>";
+$conn = new mysqli('localhost', 'root', '', 'kantor');
+if ($conn->connect_error) {
+    die("Blad Polaczenia: " . $conn->connect_error);
+}
+
+if ($_POST) {
+    $name = $_POST['imie'];
+    $surname = $_POST['nazwisko'];
+    $haslo = $_POST['haslo'];
+    $login = $_POST['e_mail'];
+    $type = $_POST['type'];
+    $_SESSION['imie'] = $name;
+    $_SESSION['nazwisko'] = $surname;
+
+    $sql = "UPDATE users SET imie='$name', nazwisko='$surname', login='$login', haslo='$haslo',type='$type' WHERE user_id=" . $_SESSION['user_id'];
+
+    $conn->query($sql);
+    $_SESSION['type'] = $type;
+    header("location: user_admin.php");
+}
+
+$sql = "SELECT * FROM users WHERE user_id=" . $_SESSION['user_id'];
+$result = $conn->query($sql);
+
+
+echo "<form method='POST' enctype='multipart/form-data'>";
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    echo "<table>";
+    echo "<tr><td>Imie</td><td><input type='text' name='imie' value='" . $row['imie'] . "'></td></tr>";
+    echo "<tr><td>Nazwisko</td><td><input type='text' name='nazwisko' value='" . $row['nazwisko'] . "'></td></tr>";
+    echo "<tr><td>Login</td><td><input type='text' name='e_mail' value='" . $row['login'] . "'></td></tr>";
+    echo "<tr><td>Haslo</td><td><input type='password' name='haslo' value='" . $row['haslo'] . "'></td></tr><tr><td>
+    <select name='type'>";
+    if($row['type'] == 'Admin'){
+    echo "<option value='Admin'>Admin</option>
+         <option value='User'>User</option>";
+    }else{
+    echo "<option value='User'>User</option>
+         <option value='Admin'>Admin</option>";
+    }
+    "</select></td></tr>";
+    echo "<tr><td><button type='submit'>Zapisz</button></td></tr>";
+    echo "</table>";
+} else {
+    echo "Nie ma nic";
+}
+echo "</form>";
+
+$conn->close();
+?>
+
+
+
+user_admin_portfel.php
+
+<?php
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['type'] != 'Admin') {
+    header("Location: /kantor/log.php");
+    exit();
+}
+echo "<h1>ID " . $_SESSION['user_id'] . "</h1>";
+$conn = new mysqli('localhost', 'root', '', 'kantor');
+if ($conn->connect_error) {
+    die("Blad Polaczenia: " . $conn->connect_error);
+}
+
+if ($_POST) {
+    $portfel = (float)$_POST['portfel'];
+
+    $sql = "UPDATE users SET portfel=$portfel WHERE user_id=" . $_SESSION['user_id'];
+
+
+    $conn->query($sql);
+    header("location: user_admin.php");
+}
+
+$sql = "SELECT * FROM users WHERE user_id=" . $_SESSION['user_id'];
+$result = $conn->query($sql);
+
+
+echo "<form method='POST' enctype='multipart/form-data'>";
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    echo "<table>";
+    echo "<tr><td>Portfel</td><td><input type= 'number' step='0.01' name='portfel' value='" . $row['portfel'] . "'></td></tr>";
+    echo "<tr><td><button type='submit'>Zapisz</button></td></tr>";
+    echo "</table>";
+} else {
+    echo "Nie ma nic";
+}
+echo "</form>";
+
+$conn->close();
+?>
+
+
+
+user_admin_panel.php
+
+<?php
+session_start();
+
+if (!isset($_SESSION['type']) || $_SESSION['type'] != 'Admin') {
+    header("Location: /kantor/log.php");
+}
+
+$conn = new mysqli('localhost', 'root', '', 'kantor');
+if ($conn->connect_error) {
+    die("Blad Polaczenia: " . $conn->connect_error);
+}
+$sql = "SELECT * FROM users";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    echo "<table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Imie</th>
+                    <th>Nazwisko</th>
+                    <th>Login</th>
+                    <th>Haslo</th>
+                    <th>Portfel</th>
+                    <th>Type</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>";
+    while ($row = $result->fetch_assoc()) {
+        if($row['user_id'] == $_SESSION['user_id']){
+            echo "<tr>";
+            echo "<td>" . $row['user_id'] . "</td>";
+            echo "<td>" . $row['imie'] . "</td>"; 
+            echo "<td>" . $row['nazwisko'] . "</td>";
+            echo "<td>" . $row['login'] . "</td>";
+            echo "<td>" . $row['haslo'] . "</td>";
+            echo "<td>" . $row['portfel'] . "</td>";
+            echo "<td>" . $row['type'] . "</td></tr>";
+        }else{
+            echo "<tr>";
+            echo "<td>" . $row['user_id'] . "</td>";
+            echo "<td>" . $row['imie'] . "</td>"; 
+            echo "<td>" . $row['nazwisko'] . "</td>";
+            echo "<td>" . $row['login'] . "</td>";
+            echo "<td>" . $row['haslo'] . "</td>";
+            echo "<td>" . $row['portfel'] . "</td>";
+            echo "<td>" . $row['type'] . "</td>";
+            echo "<td><a href='user_admin_edit_user.php?id=".$row['user_id']."'>Edytuj</a></td>";
+            echo "<td><a href='user_admin_drop_user.php?id=".$row['user_id']."'>Usun</a></td>";
+            echo "</tr>";
+        }
+    }
+    echo "<tr><td><p>Dodaj nowego uzytkownika</p></td><td><a href='user_admin_add_user.php'>Dodaj</a></td></tr>";
+    echo "</tbody></table>";
+    echo "<p>Stan Portfela</p><a href='user_admin.php'>Portfel</a>";
+} else {
+    echo "Nie ma nic";
+    echo "<p>Dodaj nowego uzytkownika</p><a href='user_admin_add_user.php'>Dodaj</a>";
+    echo "<p>Stan Portfela</p><a href='user_admin.php'>Portfel</a>";
+}
+$conn->close();
+?>
+
+
+
+
+
+user_admin_add_user.php
+
+<?php
+session_start();
+if (!isset($_SESSION['type']) || $_SESSION['type'] != 'Admin') {
+    header("Location: /kantor/log.php");
+}
+$conn = new mysqli('localhost', 'root', '', 'kantor');
+if ($conn->connect_error) {
+    die("Blad Polaczenia: " . $conn->connect_error);
+}
+echo "<form method='POST'>";
+    echo "<table>";
+    echo "<tr><td>Imie</td><td><input type='text' name='imie' value=''></td></tr>";
+    echo "<tr><td>Nazwisko</td><td><input type='text' name='nazwisko' value=''></td></tr>";
+    echo "<tr><td>Portfel</td><td><input type= 'number' step='0.01' name='portfel'></td></tr>";
+    echo "<tr><td>Login</td><td><input type='text' name='login' value=''></td></tr>";
+    echo "<tr><td>Haslo</td><td><input type='password' name='haslo' value=''></td></tr>";
+    echo "<tr><td>Type</td><td>
+    <select name='type'>
+        <option value='User'>User</option>
+        <option value='Admin'>Admin</option>
+    </select></td></tr>";
+    echo "<tr><td><button type='submit'>Zapisz</button></td></tr>";
+    echo "</table>";
+echo "</form>";
+
+if ($_POST) {
+    $name = $_POST['imie'];
+    $surname = $_POST['nazwisko'];
+    $portfel = (float)$_POST['portfel'];
+    $haslo = $_POST['haslo'];
+    $login = $_POST['login'];
+    $type = $_POST['type'];
+    $sql = "INSERT INTO users(imie, nazwisko, login, haslo, portfel, type) VALUES ('$name', '$surname', '$login', '$haslo', $portfel, '$type')";
+   
+    $conn->query($sql);
+    header("location: user_admin_panel.php");
+}
+?>
+
+
+
+user_admin_edit_user.php
+
+<?php
+session_start();
+if (!isset($_SESSION['type']) || $_SESSION['type'] != 'Admin') {
+    header("Location: /kantor/log.php");
+}
+echo "<h1>ID " . $_GET['id'] . "</h1>";
+$conn = new mysqli('localhost', 'root', '', 'kantor');
+if ($conn->connect_error) {
+    die("Blad Polaczenia: " . $conn->connect_error);
+}
+
+if ($_POST) {
+    $name = $_POST['imie'];
+    $surname = $_POST['nazwisko'];
+    $portfel = (float)$_POST['portfel'];
+    $haslo = $_POST['haslo'];
+    $login = $_POST['e_mail'];
+    $type = $_POST['type'];
+
+    $sql = "UPDATE users SET imie='$name', nazwisko='$surname', login='$login', haslo='$haslo',portfel=$portfel, type='$type' WHERE user_id=" . $_GET['id'];
+
+
+    $conn->query($sql);
+    header("location: user_admin_panel.php");
+}
+
+$sql = "SELECT * FROM users WHERE user_id=" . $_GET['id'];
+$result = $conn->query($sql);
+
+
+echo "<form method='POST' enctype='multipart/form-data'>";
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    echo "<table>";
+    echo "<tr><td>Imie</td><td><input type='text' name='imie' value='" . $row['imie'] . "'></td></tr>";
+    echo "<tr><td>Nazwisko</td><td><input type='text' name='nazwisko' value='" . $row['nazwisko'] . "'></td></tr>";
+    echo "<tr><td>Portfel</td><td><input type= 'number' step='0.01' name='portfel' value='" . $row['portfel'] . "'></td></tr>";
+    echo "<tr><td>Login</td><td><input type='text' name='e_mail' value='" . $row['login'] . "'></td></tr>";
+    echo "<tr><td>Haslo</td><td><input type='password' name='haslo' value='" . $row['haslo'] . "'></td></tr>";
+    echo "<tr><td>Type</td><td>
+    <select name='type'>";
+    if($row['type'] == 'Admin'){
+    echo "<option value='Admin'>Admin</option>
+         <option value='User'>User</option>";
+    }else{
+    echo "<option value='User'>User</option>
+         <option value='Admin'>Admin</option>";
+    }
+    "</select></td></tr>";
+    echo "<tr><td><button type='submit'>Zapisz</button></td></tr>";
+    echo "</table>";
+} else {
+    echo "Nie ma nic";
+}
+echo "</form>";
+
+$conn->close();
+?>
