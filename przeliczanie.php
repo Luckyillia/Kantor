@@ -72,7 +72,7 @@ $portfel = $row['portfel'];
         <a href="<?php echo ($_SESSION['type'] == "Admin") ? '/kantor/admin/user_admin.php' : '/kantor/user/user.php'; ?>">Powrót</a>
     </div>
     <div class="container">
-        <h1 class="user-info">Kalkulator Walutowy</h1>
+        <h1 class="user-info">Wymiana</h1>
         <form method="post" action="">
             <h1>Portfel:<?php echo $portfel;?></h1>
             <label for="amount">Kwota:</label>
