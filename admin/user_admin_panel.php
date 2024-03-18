@@ -38,7 +38,7 @@ $result = $conn->query($sql);
                     <th>Nazwisko</th>
                     <th>Login</th>
                     <th>Haslo</th>
-                    <th>Portfel</th>
+                    <th>Portfel(PLN)</th>
                     <th>Type</th>
                     <th>Edit</th>
                     <th>Delete</th>

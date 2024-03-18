@@ -190,7 +190,7 @@ h1 {
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
-    float: right;
+    text-align: right;
 }
 
 .wallet-link:hover {
@@ -228,4 +228,7 @@ h1 {
 .refresh-button2:hover {
     text-decoration: none;
     background-color: #0056b3;
+}
+.mini{
+    font-size: 18px;
 }

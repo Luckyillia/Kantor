@@ -1,3 +1,20 @@
+ <?php
+session_start();
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "kantor";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$sql = "SELECT waluta.name, kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id GROUP BY waluta.name ORDER BY kurs.kurs DESC";
+
+$result = $conn->query($sql);
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,28 +24,25 @@
 <body>
     <div class="exchange-rate">
         <div class="exchange-rate-title">Kursy walut:</div>
-        <?php
-        session_start();
-
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "kantor";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        $sql = "SELECT waluta.name, kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id GROUP BY waluta.name ORDER BY kurs.kurs DESC";
-
-        $result = $conn->query($sql);
-
+       <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<div class='exchange-rate-item'><span>" . $row['name'] . "</span>: " . $row['kurs'] . "</div>";
+                $name = $row['name'];
+                $length = strlen($name);
+                $gif = substr($name, 0, $length - 1);
+
+                echo "<div class='exchange-rate-item'>";
+                if($row['name'] == 'eur'){
+                    echo "<img src='https://www.waluty.pl/app/uploads/europeanunion.gif'>";
+                }elseif ($row['name'] == 'uah') {
+                    echo "<img src='https://www.waluty.pl/app/uploads/2015/12/ua.gif'>";
+                }else{
+                    echo "<img src='https://www.waluty.pl/app/uploads/",$gif,".gif'>";
+                    
+                }
+                echo "<span>" . $row['name'] . "</span>: " . $row['kurs'] . "</div>";
             }
-        } else {
+        }else{
             echo "Brak danych o kursie walut.";
         }
         ?>
