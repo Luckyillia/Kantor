@@ -36,7 +36,10 @@
             echo "Brak danych o kursie walut.";
         }
         ?>
-        <a href="kurs.php" class="refresh-button">Odśwież Kurs Walut</a>
+        <a href="/kantor/kurs.php" class="refresh-button">Odśwież Kurs Walut</a>
+    </div>
+    <div class="exchange-rate2">
+        <a href="/kantor/przeliczanie.php" class="refresh-button2">Przeliczanie</a>
     </div>
     <div class="container">
         <?php
@@ -49,7 +52,7 @@
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             echo "<div class='user-info'>Witaj, <span>" . $row['imie'] . " " . $row['nazwisko'] . "</span></div>";
-            echo "<div>Stan Twojego portfela: " . $row['portfel'] . " PLN</div>";
+            echo "<div class='user-info'>Stan Twojego portfela: " . $row['portfel'] . " PLN</div>";
             echo "<div class='user-actions'>";
             echo "<a href='user_panel.php'>Zmien</a>";
             echo "<a href='user_portfel.php'>Dodaj</a>";

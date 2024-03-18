@@ -17,75 +17,37 @@ if ($conn->connect_error) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edytuj Użytkownika</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-            width: 300px;
-        }
-        h1 {
-            text-align: center;
-        }
-        table {
-            width: 100%;
-        }
-        table tr {
-            margin-bottom: 10px;
-        }
-        table tr td {
-            padding: 5px;
-            text-align: left;
-        }
-        select {
-            width: 100%;
-            padding: 5px;
-            margin-top: 5px;
-        }
-        button[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-
-    </style>
+    <link rel="stylesheet" href="/kantor/css/styles.css">
 </head>
 
 <body>
 
-    <form method='POST'>
-        <?php
-        $sql = "SELECT * FROM users WHERE user_id=" . $_GET['id'];
-        $result = $conn->query($sql);
-        echo "<h1>ID " . $_GET['id'] . "</h1>";
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            echo "<table>";
-            echo "<tr><td>Imie</td><td><input type='text' name='imie' value='" . $row['imie'] . "'></td></tr>";
-            echo "<tr><td>Nazwisko</td><td><input type='text' name='nazwisko' value='" . $row['nazwisko'] . "'></td></tr>";
-            echo "<tr><td>Portfel</td><td><input type= 'number' step='0.01' name='portfel' value='" . $row['portfel'] . "'></td></tr>";
-            echo "<tr><td>Login</td><td><input type='text' name='e_mail' value='" . $row['login'] . "'></td></tr>";
-            echo "<tr><td>Haslo</td><td><input type='password' name='haslo' value='" . $row['haslo'] . "'></td></tr>";
-            echo "<tr><td>Type</td><td>
-            <select name='type'>";
+    <form method='POST' class="container">
+    <?php
+    $sql = "SELECT * FROM users WHERE user_id=" . $_GET['id'];
+    $result = $conn->query($sql);
+    echo "<h1>ID " . $_GET['id'] . "</h1>";
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        ?>
+        <label for="imie">Imię:</label>
+        <input type='text' name='imie' id="imie" value='<?php echo $row['imie']; ?>'>
+
+        <label for="nazwisko">Nazwisko:</label>
+        <input type='text' name='nazwisko' id="nazwisko" value='<?php echo $row['nazwisko']; ?>'>
+
+        <label for="portfel">Portfel:</label>
+        <input type='number' step='0.01' name='portfel' id="portfel" value='<?php echo $row['portfel']; ?>'>
+
+        <label for="e_mail">Login:</label>
+        <input type='text' name='e_mail' id="e_mail" value='<?php echo $row['login']; ?>'>
+
+        <label for="haslo">Hasło:</label>
+        <input type='password' name='haslo' id="haslo" value='<?php echo $row['haslo']; ?>'>
+
+        <label for="type">Type:</label>
+        <select name='type' id="type">
+            <?php
             if ($row['type'] == 'Admin') {
                 echo "<option value='Admin'>Admin</option>
                      <option value='User'>User</option>";
@@ -93,14 +55,17 @@ if ($conn->connect_error) {
                 echo "<option value='User'>User</option>
                      <option value='Admin'>Admin</option>";
             }
-            "</select></td></tr>";
-            echo "<tr><td colspan='2'><button type='submit'>Zapisz</button></td></tr>";
-            echo "</table>";
-        } else {
-            echo "Nie ma nic";
-        }
-        ?>
-    </form>
+            ?>
+        </select>
+
+        <button type='submit'>Zapisz</button>
+    <?php
+    } else {
+        echo "Nie ma nic";
+    }
+    ?>
+</form>
+
 
 </body>
 

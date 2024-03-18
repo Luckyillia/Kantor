@@ -32,7 +32,10 @@
 
         $conn->close();
         ?>
-        <a href="kurs.php" class="refresh-button">Odśwież Kurs Walut</a>
+        <a href="/kantor/kurs.php" class="refresh-button">Odśwież Kurs Walut</a>
+    </div>
+    <div class="exchange-rate2">
+        <a href="/kantor/przeliczanie.php" class="refresh-button2">Przeliczanie</a>
     </div>
     <div class="container">
         <?php
@@ -63,7 +66,7 @@
         ?>
             <div class="info">
                 <?php echo "<div class='user-info'>Witaj, <span>" . $_SESSION['imie'] . " " . $_SESSION['nazwisko'] . "</span></div>"; ?>
-                Stan Twojego portfela: <?php echo $row['portfel']; ?> PLN<br>
+                <div class="user-info">Stan Twojego portfela: <?php echo $row['portfel']; ?> PLN</div>
             </div>
             <div class="user-actions">
                 <a class="link" href="user_admin_panel.php">Admin panel</a>

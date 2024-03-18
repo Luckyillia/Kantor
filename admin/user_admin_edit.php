@@ -43,14 +43,15 @@ $result = $conn->query($sql);
         echo "<h1>ID " . $_SESSION['user_id'] . "</h1>";
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc(); ?>
-            <label for="login">Imię:</label><br>
+            <label>Imię:</label><br>
             <input type="text" name="imie" value="<?php echo $row['imie']; ?>"><br>
-            <label for="login">Nazwisko:</label><br>
+            <label>Nazwisko:</label><br>
             <input type="text" name="nazwisko" value="<?php echo $row['nazwisko']; ?>"><br>
-            <label for="login">Login:</label><br>
+            <label>Login:</label><br>
             <input type="text" name="e_mail" value="<?php echo $row['login']; ?>"><br>
-            <label for="login">Hasło:</label><br>
+            <label>Hasło:</label><br>
             <input type="password" name="haslo" value="<?php echo $row['haslo']; ?>"><br>
+            <label>Type: </label><br>
             <select name='type'>
             <?php
             if ($row['type'] == 'Admin') {

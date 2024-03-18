@@ -40,7 +40,7 @@ body {
     text-align: center;
     margin-top: 20px;
 }
-label {
+label, h1{
     font-weight: bold;
     color : white;
     font-size: 21px;
@@ -82,14 +82,19 @@ a:hover {
     text-decoration: underline;
 }
 select {
-    width: 100%;
-    padding: 5px;
-    margin-top: 5px;
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
 }
 .user-info {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
 .user-info span {
     color: #007bff;
 }
@@ -101,7 +106,7 @@ select {
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 14px;
     z-index: 9999;
@@ -129,12 +134,6 @@ select {
 .user-actions a:hover {
     background-color: #0056b3;
 }
-table {
-    width: 100%;
-}
-table td {
-    padding: 10px;
-}
 button {
     width: 100%;
     padding: 10px;
@@ -151,4 +150,82 @@ h1 {
     text-align: center;
     margin-bottom: 20px;
     font-size: 20px;
+}
+.container table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.container th, td {
+    color: white;
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.kreseczka{
+    border-bottom: none;
+}
+
+.add-user-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.add-user-link:hover {
+    text-decoration: none;
+    background-color: #0056b3;
+}
+
+.wallet-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    float: right;
+}
+
+.wallet-link:hover {
+    text-decoration: none;
+    background-color: #0056b3;
+}
+.exchange-rate2 {
+    position: fixed;
+    top: 225px;
+    right: 20px;
+    color: white;
+    font-size: 14px;
+    z-index: 9999;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(47, 54, 64, 0.9);
+    text-align: center;
+    width: 150px;
+    margin: 0,0,0,0;
+    justify-content: center;
+}
+.refresh-button2 {
+    bottom: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 9999;
+    text-decoration:none;
+}
+.refresh-button2:hover {
+    text-decoration: none;
+    background-color: #0056b3;
 }

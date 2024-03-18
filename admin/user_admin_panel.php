@@ -22,62 +22,7 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #f2f2f2;
-        }
-
-        .add-user-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .add-user-link:hover {
-            background-color: #0056b3;
-        }
-
-        .wallet-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            float: right;
-        }
-
-        .wallet-link:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="/kantor/css/styles.css">
 </head>
 
 <body>
@@ -85,7 +30,7 @@ $result = $conn->query($sql);
     if ($result->num_rows > 0) {
     ?>
 
-        <table>
+        <table class="container">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -111,7 +56,9 @@ $result = $conn->query($sql);
                         echo "<td>" . $row['login'] . "</td>";
                         echo "<td>" . $row['haslo'] . "</td>";
                         echo "<td>" . $row['portfel'] . "</td>";
-                        echo "<td>" . $row['type'] . "</td></tr>";
+                        echo "<td>" . $row['type'] . "</td>";
+                        echo "<td></td>";
+                        echo "<td></td></tr>";
                     } else {
                         echo "<tr>";
                         echo "<td>" . $row['user_id'] . "</td>";
@@ -121,15 +68,15 @@ $result = $conn->query($sql);
                         echo "<td>" . $row['haslo'] . "</td>";
                         echo "<td>" . $row['portfel'] . "</td>";
                         echo "<td>" . $row['type'] . "</td>";
-                        echo "<td><a href='user_admin_edit_user.php?id=" . $row['user_id'] . "'>Edytuj</a></td>";
-                        echo "<td><a href='user_admin_drop_user.php?id=" . $row['user_id'] . "'>Usun</a></td>";
+                        echo "<td class='user-actions'><a href='user_admin_edit_user.php?id=" . $row['user_id'] . "'>Edytuj</a></td>";
+                        echo "<td class='user-actions'><a href='user_admin_drop_user.php?id=" . $row['user_id'] . "'>Usun</a></td>";
                         echo "</tr>";
                     }
                 }
                 ?>
 
-                <tr>
-                    <td colspan="9">
+                <tr >
+                    <td colspan="9" class="kreseczka">
                         <a href='user_admin_add_user.php' class='add-user-link'>Dodaj nowego uzytkownika</a>
                         <a href='user_admin.php' class='wallet-link'>Stan Portfela</a>
                     </td>
