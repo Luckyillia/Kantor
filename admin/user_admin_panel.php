@@ -78,7 +78,7 @@ $result = $conn->query($sql);
                 <tr >
                     <td colspan="9" class="kreseczka">
                         <a href='user_admin_add_user.php' class='add-user-link'>Dodaj nowego uzytkownika</a>
-                        <a href='user_admin.php' class='wallet-link'>Stan Portfela</a>
+                        <a href='user_admin.php' class='wallet-link' style="float: right;">Stan Portfela</a>
                     </td>
                 </tr>
 

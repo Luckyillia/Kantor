@@ -50,6 +50,7 @@ if ($conn->connect_error) {
 
 <?php
 if ($_POST) {
+    $user_id = $_SESSION['user_id'];
     $name = $_POST['imie'];
     $surname = $_POST['nazwisko'];
     $portfel = (float)$_POST['portfel'];
@@ -57,7 +58,6 @@ if ($_POST) {
     $login = $_POST['login'];
     $type = $_POST['type'];
     $sql = "INSERT INTO users(imie, nazwisko, login, haslo, portfel, type) VALUES ('$name', '$surname', '$login', '$haslo', $portfel, '$type')";
-   
     $conn->query($sql);
     header("location: user_admin_panel.php");
 }

@@ -1,23 +1,23 @@
 <?php
-        session_start();
-        if (!isset($_SESSION['user_id']) || $_SESSION['type'] != 'User') {
-            header("Location: /kantor/log.php");
-            exit();
-        }
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "kantor";
+    session_start();
+    if (!isset($_SESSION['user_id']) || $_SESSION['type'] != 'User') {
+        header("Location: /kantor/log.php");
+        exit();
+    }
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "kantor";
 
-        $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        $sql = "SELECT waluta.name, kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id GROUP BY waluta.name ORDER BY kurs DESC";
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    $sql = "SELECT waluta.name, kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id GROUP BY waluta.name ORDER BY kurs DESC";
 
-        $result = $conn->query($sql);
-        ?>
+    $result = $conn->query($sql);
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,8 +67,15 @@
             echo "<div class='user-info'>Witaj, <span>" . $row['imie'] . " " . $row['nazwisko'] . "</span></div>";
             echo "<div class='user-info'>Stan Twojego portfela: " . $row['portfel'] . " PLN</div>";
             echo "<div class='user-actions'>";
+            $check_sql = "SELECT COUNT(*) as count FROM portfel WHERE user_id = $user_id";
+            $check_result = $conn->query($check_sql);
+            $check_row = $check_result->fetch_assoc();
+            if ($check_row['count'] < 1) {
+                echo "<a href='/kantor/tworzenie_portfela.php?id=" . $user_id . "'>Stwórz portfele walutowe</a>";
+            }
             echo "<a href='user_panel.php'>Zmien</a>";
             echo "<a href='user_portfel.php'>Dodaj</a>";
+
             echo "<a href='/kantor/log.php'>Wyloguj</a>";
             echo "</div>";
         } else {

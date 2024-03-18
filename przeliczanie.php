@@ -93,7 +93,27 @@ $portfel = $row['portfel'];
             </select>
             <br><br>
             <input type="submit" name="submit" value="Przelicz">
+
         </form>
+         <?php
+        if (isset($_POST['submit'])) {
+            $amount = floatval($_POST['amount']);
+            $currency = $_POST['currency'];
+
+            $sql = "SELECT kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id WHERE waluta.name='$currency'";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $exchange_rate = $row['kurs'];
+
+                // Przelicz kwotę na PLN
+                $resul = round($amount / $exchange_rate,2);
+                $sql
+            } else {
+                echo "<p>Błąd: Brak kursu dla wybranej waluty.</p>";
+            }
+        }
+        ?>
         <a href="<?php echo ($_SESSION['type'] == "Admin") ? '/kantor/admin/user_admin.php' : '/kantor/user/user.php'; ?>">Powrót</a>
     </div>
 </body>
