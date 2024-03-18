@@ -27,72 +27,17 @@ $result = $conn->query($sql);
 <html>
 <head>
     <title>Ustawienia portfela</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-            width: 300px;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 20px;
-        }
-        table {
-            width: 100%;
-        }
-        table td {
-            padding: 10px;
-        }
-        input[type="number"] {
-            width: calc(100% - 20px);
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="/kantor/css/styles.css">
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" class="container">
         <?php
-        echo "<h1>Ustawienia portfela dla ID " . $_SESSION['user_id'] . "</h1>";
+        echo "<h2>Ustawienia portfela dla<br> ID " . $_SESSION['user_id'] . "</h2>";
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc(); ?>
-            <table>
-                <tr>
-                    <td>Portfel</td>
-                    <td><input type="number" step="0.01" name="portfel" value="<?php echo $row['portfel']; ?>"></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><button type="submit">Zapisz</button></td>
-                </tr>
-            </table>
+                <label>Portfel:</label>
+                <input type="number" step="0.01" name="portfel" value="<?php echo $row['portfel']; ?>">
+                <button type="submit">Zapisz</button>
         <?php } else {
             echo "Brak danych";
         } ?>

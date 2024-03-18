@@ -6,8 +6,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['type'] != 'Admin') {
     exit();
 }
 
-
-
 $conn = new mysqli('localhost', 'root', '', 'kantor');
 if ($conn->connect_error) {
     die("Blad Polaczenia: " . $conn->connect_error);
@@ -37,81 +35,34 @@ $result = $conn->query($sql);
 <html>
 <head>
     <title>Admin Panel</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-            width: 300px;
-        }
-        h1 {
-            text-align: center;
-        }
-        table {
-            width: 100%;
-        }
-        table tr {
-            margin-bottom: 10px;
-        }
-        table tr td {
-            padding: 5px;
-            text-align: left;
-        }
-        select {
-            width: 100%;
-            padding: 5px;
-            margin-top: 5px;
-        }
-        button[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="/kantor/css/styles.css">
 </head>
 <body>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" class="container">
         <?php
         echo "<h1>ID " . $_SESSION['user_id'] . "</h1>";
         if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            echo "<table>";
-            echo "<tr><td>Imie</td><td><input type='text' name='imie' value='" . $row['imie'] . "'></td></tr>";
-            echo "<tr><td>Nazwisko</td><td><input type='text' name='nazwisko' value='" . $row['nazwisko'] . "'></td></tr>";
-            echo "<tr><td>Login</td><td><input type='text' name='e_mail' value='" . $row['login'] . "'></td></tr>";
-            echo "<tr><td>Haslo</td><td><input type='password' name='haslo' value='" . $row['haslo'] . "'></td></tr>";
-            echo "<tr><td>Rola</td><td>
-                    <select name='type'>";
+            $row = $result->fetch_assoc(); ?>
+            <label for="login">Imię:</label><br>
+            <input type="text" name="imie" value="<?php echo $row['imie']; ?>"><br>
+            <label for="login">Nazwisko:</label><br>
+            <input type="text" name="nazwisko" value="<?php echo $row['nazwisko']; ?>"><br>
+            <label for="login">Login:</label><br>
+            <input type="text" name="e_mail" value="<?php echo $row['login']; ?>"><br>
+            <label for="login">Hasło:</label><br>
+            <input type="password" name="haslo" value="<?php echo $row['haslo']; ?>"><br>
+            <select name='type'>
+            <?php
             if ($row['type'] == 'Admin') {
                 echo "<option value='Admin'>Admin</option>
                       <option value='User'>User</option>";
             } else {
                 echo "<option value='User'>User</option>
                       <option value='Admin'>Admin</option>";
-            }
-            echo "</select>
-                  </td></tr>";
-            echo "<tr><td colspan='2'><button type='submit'>Zapisz</button></td></tr>";
-            echo "</table>";
-        } else {
+            }?>
+            </select>
+            <button type="submit">Zapisz</button>
+        <?php } else {
             echo "Nie ma nic";
         }
         ?>
