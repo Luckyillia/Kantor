@@ -1,69 +1,12 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Rejestracja</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-            width: 300px;
-            text-align: left; /* Добавлено для выравнивания текста по центру */
-        }
-        label {
-            font-weight: bold;
-        }
-        input[type="text"],
-        input[type="password"] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-        .error-message {
-            color: red;
-            margin-bottom: 10px;
-        }
-        a {
-            display: block;
-            margin-top: 10px;
-            color: #007bff;
-            text-decoration: none;
-            text-align: center;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <title>Logowanie</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="container">
+    <div class="exchange-rate">
+        <div class="exchange-rate-title">Kursy walut:</div>
         <?php
         session_start();
 
@@ -77,7 +20,22 @@
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
+        $sql = "SELECT waluta.name, kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id GROUP BY waluta.name ORDER BY kurs.kurs DESC";
 
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<div class='exchange-rate-item'><span>" . $row['name'] . "</span>: " . $row['kurs'] . "</div>";
+            }
+        } else {
+            echo "Brak danych o kursie walut.";
+        }
+        ?>
+        <a href="kurs.php" class="refresh-button">Odśwież Kurs Walut</a>
+    </div>
+    <div class="container">
+        <?php
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $login = $_POST['login'];
             $haslo = $_POST['haslo'];

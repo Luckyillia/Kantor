@@ -10,7 +10,7 @@ $conn = new mysqli('localhost', 'root', '', 'kantor');
 if ($conn->connect_error) {
     die("Blad Polaczenia: " . $conn->connect_error);
 }
-$sql = "SELECT * FROM users";
+$sql = "SELECT * FROM users ORDER BY user_id ASC";
 $result = $conn->query($sql);
 
 ?>
@@ -81,7 +81,6 @@ $result = $conn->query($sql);
 </head>
 
 <body>
-
     <?php
     if ($result->num_rows > 0) {
     ?>
