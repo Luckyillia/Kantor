@@ -40,7 +40,7 @@ $result = $conn->query($sql);
                     echo "<img src='https://www.waluty.pl/app/uploads/",$gif,".gif'>";
                     
                 }
-                echo "<span>" . $row['name'] . "</span>: " . $row['kurs'] . "</div>";
+                echo "<span>" . strtoupper($row['name']) . "</span>: " . $row['kurs'] . "</div>";
             }
         }else{
             echo "Brak danych o kursie walut.";
