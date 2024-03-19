@@ -20,7 +20,7 @@
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        $sql = "SELECT waluta.name, kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id GROUP BY waluta.name ORDER BY kurs.kurs DESC";
+        $sql = "SELECT kurs.data, waluta.name, kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id ORDER BY kurs.data DESC LIMIT 5";
 
         $result = $conn->query($sql);
 

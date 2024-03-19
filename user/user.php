@@ -14,7 +14,7 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    $sql = "SELECT waluta.name, kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id GROUP BY waluta.name ORDER BY kurs DESC";
+    $sql = "SELECT kurs.data, waluta.name, kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id ORDER BY kurs.data DESC LIMIT 5";
 
     $result = $conn->query($sql);
 ?>
@@ -72,7 +72,7 @@
             echo "<a href='user_panel.php'>Zmien</a>";
             echo "<a href='user_portfel.php'>Dodaj</a>";
 
-            echo "<a href='/kantor/log.php'>Wyloguj</a>";
+            echo "<a href='/kantor/wyloguj.php'>Wyloguj</a>";
             echo "</div>";
         } else {
             echo "Nie znaleziono danych portfela.";

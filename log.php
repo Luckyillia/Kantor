@@ -11,7 +11,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$sql = "SELECT waluta.name, kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id GROUP BY waluta.name ORDER BY kurs.kurs DESC";
+$sql = "SELECT kurs.data, waluta.name, kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id ORDER BY kurs.data DESC LIMIT 5";
 
 $result = $conn->query($sql);
 ?>
@@ -28,7 +28,6 @@ $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $name = $row['name'];
-
                 echo "<div class='exchange-rate-item'>";
                 echo "<img src='/kantor/img/waluta/",$name,".png'>";
                 echo "<span>" . strtoupper($name) . "</span>: " . $row['kurs'] . "</div>";

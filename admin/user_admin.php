@@ -12,7 +12,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql1 = "SELECT waluta.name, kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id GROUP BY waluta.name";
+$sql1 = "SELECT kurs.data, waluta.name, kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id ORDER BY kurs.data DESC LIMIT 5";
 $result = $conn->query($sql1);
 ?>
 <!DOCTYPE html>
@@ -88,7 +88,7 @@ $result = $conn->query($sql1);
             <a class="link" href="user_admin_panel.php">Admin panel</a>
             <a class="link" href="user_admin_edit.php">Zmień dane</a>
             <a class="link" href="user_admin_portfel.php">Dodaj kasę</a>
-            <a class="link" href="/kantor/log.php">Wyloguj</a>
+            <a class="link" href="/kantor/wyloguj.php">Wyloguj</a>
         </div>
     </div>
 </body>
