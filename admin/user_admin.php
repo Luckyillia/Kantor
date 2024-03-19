@@ -28,25 +28,15 @@ $result = $conn->query($sql1);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $name = $row['name'];
-                $length = strlen($name);
-                $gif = substr($name, 0, $length - 1);
-
                 echo "<div class='exchange-rate-item'>";
-                if($row['name'] == 'eur'){
-                    echo "<img src='https://www.waluty.pl/app/uploads/europeanunion.gif'>";
-                }elseif ($row['name'] == 'uah') {
-                    echo "<img src='https://www.waluty.pl/app/uploads/2015/12/ua.gif'>";
-                }else{
-                    echo "<img src='https://www.waluty.pl/app/uploads/",$gif,".gif'>";
-                    
-                }
-                echo "<span>" . strtoupper($row['name']) . "</span>: " . $row['kurs'] . "</div>";
+                echo "<img src='/kantor/img/waluta/",$name,".png'>";
+                echo "<span>" . strtoupper($name) . "</span>: " . $row['kurs'] . "</div>";
             }
         }else{
             echo "Brak danych o kursie walut.";
         }
         ?>
-        <a href="kurs.php" class="refresh-button">Odśwież Kurs Walut</a>
+        <a href="/kantor/kurs.php" class="refresh-button">Odśwież Kurs Walut</a>
     </div>
     <div class="exchange-rate2">
         <a href="/kantor/przeliczanie.php" class="refresh-button2">Przeliczanie</a>
@@ -88,6 +78,12 @@ $result = $conn->query($sql1);
             $check_row = $check_result->fetch_assoc();
             if ($check_row['count'] < 1) {
                 echo "<a href='/kantor/tworzenie_portfela.php?id=" . $user_id . "'>Stwórz portfele walutowe</a>";
+            }
+            $check_sql = "SELECT COUNT(*) as count FROM portfel WHERE user_id = $user_id";
+            $check_result = $conn->query($check_sql);
+            $check_row = $check_result->fetch_assoc();
+            if ($check_row['count'] > 1) {
+                echo "<a href='/kantor/usuwanie_portfela.php?id=" . $user_id . "'>Usun portfele walutowe</a>";
             }?>
             <a class="link" href="user_admin_panel.php">Admin panel</a>
             <a class="link" href="user_admin_edit.php">Zmień dane</a>

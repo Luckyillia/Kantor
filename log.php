@@ -28,19 +28,10 @@ $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $name = $row['name'];
-                $length = strlen($name);
-                $gif = substr($name, 0, $length - 1);
 
                 echo "<div class='exchange-rate-item'>";
-                if($row['name'] == 'eur'){
-                    echo "<img src='https://www.waluty.pl/app/uploads/europeanunion.gif'>";
-                }elseif ($row['name'] == 'uah') {
-                    echo "<img src='https://www.waluty.pl/app/uploads/2015/12/ua.gif'>";
-                }else{
-                    echo "<img src='https://www.waluty.pl/app/uploads/",$gif,".gif'>";
-                    
-                }
-                echo "<span>" . strtoupper($row['name']) . "</span>: " . $row['kurs'] . "</div>";
+                echo "<img src='/kantor/img/waluta/",$name,".png'>";
+                echo "<span>" . strtoupper($name) . "</span>: " . $row['kurs'] . "</div>";
             }
         }else{
             echo "Brak danych o kursie walut.";

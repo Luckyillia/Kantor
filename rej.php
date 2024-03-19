@@ -26,7 +26,10 @@
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<div class='exchange-rate-item'><span>" . $row['name'] . "</span>: " . $row['kurs'] . "</div>";
+                $name = $row['name'];
+                echo "<div class='exchange-rate-item'>";
+                echo "<img src='/kantor/img/waluta/",$name,".png'>";
+                echo "<span>" . strtoupper($name) . "</span>: " . $row['kurs'] . "</div>";
             }
         } else {
             echo "Brak danych o kursie walut.";

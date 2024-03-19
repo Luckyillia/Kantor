@@ -11,6 +11,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
 $user_id = $_SESSION['user_id'];
 $sql = "SELECT portfel FROM users WHERE user_id=$user_id";
 $result = $conn->query($sql);
@@ -92,25 +93,45 @@ $portfel = $row['portfel'];
                 ?>
             </select>
             <br><br>
-            <input type="submit" name="submit" value="Przelicz">
+            <input type="submit" name="wymien" value="Przelicz">
 
         </form>
          <?php
-        if (isset($_POST['submit'])) {
+        if (isset($_POST['wymien'])) {
             $amount = floatval($_POST['amount']);
             $currency = $_POST['currency'];
 
-            $sql = "SELECT kurs.kurs FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id WHERE waluta.name='$currency'";
-            $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $exchange_rate = $row['kurs'];
-
-                // Przelicz kwotę na PLN
-                $resul = round($amount / $exchange_rate,2);
-                $sql
+            // Sprawdź, czy użytkownik ma wystarczająco środków w portfelu
+            if ($amount > $portfel) {
+                echo "<p>Błąd: Niewystarczająca ilość środków w portfelu.</p>";
             } else {
-                echo "<p>Błąd: Brak kursu dla wybranej waluty.</p>";
+                $sql = "SELECT kurs.kurs, kurs.waluta_id FROM kurs INNER JOIN waluta ON kurs.waluta_id = waluta.id WHERE waluta.name='$currency'";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $exchange_rate = $row['kurs'];
+
+                    // Przelicz kwotę na PLN
+                    $obliczanie = round($amount / $exchange_rate,2);
+                    $sql_update = "UPDATE portfel SET amount = amount + $obliczanie WHERE user_id = $user_id and waluta_id= " . $row['waluta_id'];
+                    if ($conn->query($sql_update) === TRUE) {
+                        // Aktualizacja portfela powiodła się
+                        $portfel_pln = $portfel - $amount;
+                        $sql_update = "UPDATE users SET portfel = $portfel_pln WHERE user_id = $user_id";
+                        if ($conn->query($sql_update) === TRUE) {
+                            // Transakcja zakończona pomyślnie
+                            echo "<p>Transakcja zakończona pomyślnie.</p>";
+                            header("Location: " . ($_SESSION['type'] == "Admin" ? '/kantor/admin/user_admin.php' : '/kantor/user/user.php'));
+                            exit(); // Zakończ działanie skryptu po przekierowaniu
+                        } else {
+                            echo "Błąd: " . $conn->error;
+                        }
+                    } else {
+                        echo "Błąd: " . $conn->error;
+                    }
+                } else {
+                    echo "<p>Błąd: Brak kursu dla wybranej waluty.</p>";
+                }
             }
         }
         ?>
@@ -122,3 +143,4 @@ $portfel = $row['portfel'];
 <?php
 $conn->close();
 ?>
+
