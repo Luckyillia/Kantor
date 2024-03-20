@@ -96,13 +96,15 @@ input[type="submit"]:hover {
     margin-bottom: 10px;
 }
 a {
-    display: block;
+    width: auto;
+    
     margin-top: 10px;
     color: #007bff;
     text-decoration: none;
     text-align: center;
 }
 a:hover {
+    width: auto;
     text-decoration: underline;
 }
 select {
