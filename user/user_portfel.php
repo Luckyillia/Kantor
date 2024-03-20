@@ -32,7 +32,7 @@ $result = $conn->query($sql);
 <body>
     <form method="post" enctype="multipart/form-data" class="container">
         <?php
-        echo "<h2>Ustawienia portfela dla<br> ID " . $_SESSION['user_id'] . "</h2>";
+        echo "<h1>Ustawienia portfela dla<br> ID " . $_SESSION['user_id'] . "</h1>";
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc(); ?>
                 <label>Portfel:</label>

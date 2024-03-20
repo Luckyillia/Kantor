@@ -87,6 +87,7 @@ $result = $conn->query($sql1);
             }?>
             <a class="link" href="user_admin_panel.php">Admin panel</a>
             <a class="link" href="user_admin_edit.php">Zmień dane</a>
+            <a class="link" href="/kantor/portfel_panel.php">Portfele Walutowe</a>
             <a class="link" href="user_admin_portfel.php">Dodaj kasę</a>
             <a class="link" href="/kantor/wyloguj.php">Wyloguj</a>
         </div>

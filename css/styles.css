@@ -40,6 +40,30 @@ body {
     text-align: center;
     margin-top: 20px;
 }
+.container1 {
+    background-color: rgba(47, 54, 64, 0.9);
+    padding: 20px;
+    position: absolute;
+    top: 314px;
+    right: 690px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    width: 300px;
+    text-align: center;
+    margin-top: 20px;
+}
+.container2 {
+    background-color: rgba(47, 54, 64, 0.9);
+    padding: 20px;
+    position: absolute;
+    top: 314px;
+    left: 544px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    width: 300px;
+    text-align: center;
+    margin-top: 20px;
+}
 label, h1{
     font-weight: bold;
     color : white;

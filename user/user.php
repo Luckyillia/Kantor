@@ -70,8 +70,8 @@
                 echo "<a href='/kantor/usuwanie_portfela.php?id=" . $user_id . "'>Usun portfele walutowe</a>";
             }
             echo "<a href='user_panel.php'>Zmien</a>";
-            echo "<a href='user_portfel.php'>Dodaj</a>";
-
+            echo "<a href='/kantor/portfel_panel.php'>Portfele Walutwe</a>";
+            echo "<a href='user_portfel.php'>Dodaj Kase</a>";
             echo "<a href='/kantor/wyloguj.php'>Wyloguj</a>";
             echo "</div>";
         } else {
