@@ -75,7 +75,7 @@ $result = $conn->query($sql);
             <label for="password">Hasło: </label><br>
             <input type="password" name="haslo" required><br>
             <input type="submit" value="Zaloguj się" style="width: 94%;">
-            <a href='rej.php' >Zarejestruj</a>
+            <a href='rej.php' class='link under'>Zarejestruj</a>
         </form>
     </div>
 </body>

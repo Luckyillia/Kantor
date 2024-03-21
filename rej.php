@@ -81,7 +81,7 @@
             <input type="text" id="surname" name="surname" required><br>
             <input type="submit" value="Zarejestruj sie">
         </form>
-        <a href='log.php'>Zaloguj</a>
+        <a href='log.php' class='link under'>Zaloguj</a>
     </div>
 </body>
 </html>

@@ -77,13 +77,13 @@ $result = $conn->query($sql1);
             $check_result = $conn->query($check_sql);
             $check_row = $check_result->fetch_assoc();
             if ($check_row['count'] < 1) {
-                echo "<a href='/kantor/tworzenie_portfela.php?id=" . $user_id . "'>Stwórz portfele walutowe</a>";
+                echo "<a class='link' href='/kantor/tworzenie_portfela.php?id=" . $user_id . "'>Stwórz portfele walutowe</a>";
             }
             $check_sql = "SELECT COUNT(*) as count FROM portfel WHERE user_id = $user_id";
             $check_result = $conn->query($check_sql);
             $check_row = $check_result->fetch_assoc();
             if ($check_row['count'] > 1) {
-                echo "<a href='/kantor/usuwanie_portfela.php?id=" . $user_id . "'>Usun portfele walutowe</a>";
+                echo "<a class='link' href='/kantor/usuwanie_portfela.php?id=" . $user_id . "'>Usun portfele walutowe</a>";
             }?>
             <a class="link" href="user_admin_panel.php">Admin panel</a>
             <a class="link" href="user_admin_edit.php">Zmień dane</a>

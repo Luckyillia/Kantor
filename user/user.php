@@ -61,18 +61,18 @@
             $check_result = $conn->query($check_sql);
             $check_row = $check_result->fetch_assoc();
             if ($check_row['count'] < 1) {
-                echo "<a href='/kantor/tworzenie_portfela.php?id=" . $user_id . "'>Stwórz portfele walutowe</a>";
+                echo "<a class='link' href='/kantor/tworzenie_portfela.php?id=" . $user_id . "'>Stwórz portfele walutowe</a>";
             }
             $check_sql = "SELECT COUNT(*) as count FROM portfel WHERE user_id = $user_id";
             $check_result = $conn->query($check_sql);
             $check_row = $check_result->fetch_assoc();
             if ($check_row['count'] > 1) {
-                echo "<a href='/kantor/usuwanie_portfela.php?id=" . $user_id . "'>Usun portfele walutowe</a>";
+                echo "<a class='link' href='/kantor/usuwanie_portfela.php?id=" . $user_id . "'>Usun portfele walutowe</a>";
             }
-            echo "<a href='user_panel.php'>Zmien</a>";
-            echo "<a href='/kantor/portfel_panel.php'>Portfele Walutwe</a>";
-            echo "<a href='user_portfel.php'>Dodaj Kase</a>";
-            echo "<a href='/kantor/wyloguj.php'>Wyloguj</a>";
+            echo "<a class='link' href='user_panel.php'>Zmien</a>";
+            echo "<a class='link' href='/kantor/portfel_panel.php'>Portfele Walutwe</a>";
+            echo "<a class='link' href='user_portfel.php'>Dodaj Kase</a>";
+            echo "<a class='link' href='/kantor/wyloguj.php'>Wyloguj</a>";
             echo "</div>";
         } else {
             echo "Nie znaleziono danych portfela.";
