@@ -59,6 +59,7 @@ if ($conn->connect_error) {
         </select>
 
         <button type='submit'>Zapisz</button>
+        <a href="/kantor/admin/user_admin_panel.php" class='link under'>Anuluj</a>
     <?php
     } else {
         echo "Nie ma nic";

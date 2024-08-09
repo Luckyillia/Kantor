@@ -42,6 +42,7 @@ if ($conn->connect_error) {
             <option value='Admin'>Admin</option>
         </select><br>
         <input type='submit' value='Zapisz'>
+        <a href="/kantor/admin/user_admin_panel.php" class='link under'>Anuluj</a>
     </form>
 
 </body>

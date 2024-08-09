@@ -1,6 +1,7 @@
   body {
     font-family: Arial, sans-serif;
-    background-image: url('/kantor/img/imgbackground.jpg');
+    background-color: black;
+    /*background-image: url('/kantor/img/imgbackground.jpg');*/
     background-repeat: no-repeat;
     background-size: cover;
     display: block;
@@ -26,7 +27,7 @@
 }
 .exchange-rate-title {
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 10px;0
 }
 .exchange-rate-item {
     margin-bottom: 10px;
@@ -49,14 +50,49 @@
     text-decoration:none;
     background-color: #0056b3;
 }
+@property --angle{
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
 .container {
-    background-color: rgba(47, 54, 64, 0.9);
+    background-color: rgba(47, 54, 64, 1);
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
     width: 300px;
     text-align: center;
     margin-top: 20px;
+    position: relative;
+}
+.container::after{
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: conic-gradient(from var(--angle), transparent, red, transparent, blue);
+    /* background-image: conic-gradient(from var(--angle),#ff0000 0%,#ff7f00 12.5%,#ffff00 25%,#00ff00 37.5%,#00ffff 50%,#0000ff 62.5%,#8b00ff 75%,#ff00ff 87.5%,#ff0000 100%); */
+    /*background-image: conic-gradient(from var(--angle),#ff4545,#00ff99,#006aff,#ffee95,#ff4545);*/
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+    padding: 5px;
+    border-radius: 12px;
+    animation: 3s spin linear infinite;
+    
+}
+.container::before{
+    filter: blur(1.5rem);
+    opacity: 0.5;
+}
+@keyframes spin {
+    from{
+        --angle: 0deg;
+    }
+    to{
+        --angle: 360deg;
+    }
 }
 .container1 {
     background-color: rgba(47, 54, 64, 0.9);

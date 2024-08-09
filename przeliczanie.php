@@ -131,7 +131,7 @@
                 }
             }
             ?>
-            <a href="<?php echo ($_SESSION['type'] == "Admin") ? '/kantor/admin/user_admin.php' : '/kantor/user/user.php'; ?>">Powrót</a>
+            <a href="<?php echo ($_SESSION['type'] == "Admin") ? '/kantor/admin/user_admin.php' : '/kantor/user/user.php'; ?>" class='link under'>Powrót</a>          
         </div>
     </body>
     </html>
