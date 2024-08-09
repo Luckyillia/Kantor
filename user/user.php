@@ -39,7 +39,7 @@
             echo "Brak danych o kursie walut.";
         }
         ?>
-        <a href="kurs.php" class="refresh-button">Odśwież Kurs Walut</a>
+        <a href="/kantor/kurs.php" class="refresh-button">Odśwież Kurs Walut</a>
     </div>
     <div class="exchange-rate2">
         <a href="/kantor/przeliczanie.php" class="refresh-button2">Przeliczanie</a>
