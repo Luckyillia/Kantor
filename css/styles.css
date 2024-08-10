@@ -254,14 +254,14 @@ h1 {
     initial-value: 0deg;
     inherits: false;
 }
-.container::after , .exchange-rate::after, .exchange-rate2::after{
+.container::after , .exchange-rate::after, .exchange-rate2::after, .container::before ,.exchange-rate::before, .exchange-rate2::before{
     content: '';
     position: absolute;
     height: 100%;
     width: 100%;
     /* background-image: conic-gradient(from var(--angle), transparent, red, transparent, blue); */
     /* background-image: conic-gradient(from var(--angle),#ff0000 0%,#ff7f00 12.5%,#ffff00 25%,#00ff00 37.5%,#00ffff 50%,#0000ff 62.5%,#8b00ff 75%,#ff00ff 87.5%,#ff0000 100%); */
-    background-image: conic-gradient(from var(--angle),#ff4545,#00ff99,#006aff,#ffee95,#ff4545);
+    background-image: conic-gradient(from var(--angle),#ff4545,#00ff99,#006aff,#ff0095,#ff4545);
     top: 50%;
     left: 50%;
     translate: -50% -50%;
@@ -273,7 +273,7 @@ h1 {
 }
 .container::before ,.exchange-rate::before, .exchange-rate2::before{
     filter: blur(1.5rem);
-    opacity: 0.5;
+    opacity: 0.7;
 }
 @keyframes spin {
     from{
