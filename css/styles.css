@@ -191,7 +191,7 @@ h1 {
     border-radius: 12px;  
     text-align: center;
     margin-top: 20px;
-    position: fixed;
+    position: absolute;
 }
 .exchange-rate-title {
     font-weight: bold;
@@ -223,20 +223,20 @@ h1 {
     left: 89%;
     width: 154px;
     background-color: rgba(47, 54, 64, 1);
-    padding: 15px;
+    padding: 20px 15px;
     border-radius: 12px;
     text-align: center;
     margin-top: 20px;
-    position: fixed;
+    position: absolute;
 }
 .refresh-button2 {
     bottom: 10px;
     right: 10px;
-    padding: 10px 38px;
+    padding: 7px 38px;
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 14px;
     z-index: 9999;
@@ -259,9 +259,9 @@ h1 {
     position: absolute;
     height: 100%;
     width: 100%;
-    background-image: conic-gradient(from var(--angle), transparent, red, transparent, blue);
+    /* background-image: conic-gradient(from var(--angle), transparent, red, transparent, blue); */
     /* background-image: conic-gradient(from var(--angle),#ff0000 0%,#ff7f00 12.5%,#ffff00 25%,#00ff00 37.5%,#00ffff 50%,#0000ff 62.5%,#8b00ff 75%,#ff00ff 87.5%,#ff0000 100%); */
-    /* background-image: conic-gradient(from var(--angle),#ff4545,#00ff99,#006aff,#ffee95,#ff4545); */
+    background-image: conic-gradient(from var(--angle),#ff4545,#00ff99,#006aff,#ffee95,#ff4545);
     top: 50%;
     left: 50%;
     translate: -50% -50%;
